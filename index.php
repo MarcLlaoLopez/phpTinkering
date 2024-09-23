@@ -1,103 +1,113 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <title>Demo PHP</title>
-    </head>
-    <body>
-        <h1>
-            <?php
-                $greeting = "Hello";
-                echo $greeting . " World!<br>";
-                $a = 3;
-                $b = 2;
-                echo "Resultat: " . $a + $b . "<br>";
-//                $movils = [
-//                    "iPhone",
-//                    "Samsung",
-//                    "Xiaomi",
-//                    "HTC",
-//                    "Huawei"
-//                ];
-            $movils = [
-                [
-                    "name" => "iPhone",
-                    "creator" => "Steve Jobs",
-                    "year" => "2002"
-                ],   [
-                    "name" => "Samsung",
-                    "creator" => "Lee Byung-chul",
-                    "year" => "2000"
-                ],   [
+<head>
+    <meta charset="UTF-8">
+    <title>Demo PHP</title>
+</head>
+<body>
+<h1>
+    <?php
+    $greeting = "Hello";
+    echo $greeting . " World!<br>";
+    $a = 3;
+    $b = 2;
+    echo "Resultat: " . $a + $b . "<br>";
+    //                $films = [
+    //                        "Dune",
+    //                        "Star Wars",
+    //                        "Blade Runner 2049",
+    //                        "Mad Max: Fury road",
+    //                        "Avatar",
+    //                        "2001: a space odyssey"
+    //                ];
+    $films = [
+        [
+            "name" => "Dune",
+            "director" => "Denis Villeneuve",
+            "year" => "2020",
+        ],   [
+            "name" => "Star Wars",
+            "director" => "George Lucas",
+            "year" => "1977",
+        ], [
+            "name" => "Blade Runner 2049",
+            "director" => "Denis Villeneuve",
+            "year" => "2017",
+        ], [
+            "name" => "Mad Max: Fury road",
+            "director" => "George Miller",
+            "year" => "2015",
+        ], [
+            "name" => "Avatar",
+            "director" => "James Cameron",
+            "year" => "2009",
+        ], [
+            "name" => "2001: a space odyssey",
+            "director" => "Stanley Kubrick",
+            "year" => "1968",
+        ]
+    ];
+    var_dump($films);
 
-                    "name" => "Xiaomi",
-                    "creator" => "Lei Jun",
-                    "year" => "2008"
-                ],   [
-                    "name" => "HTC",
-                    "creator" => "Peter Chou",
-                    "year" => "2010"
-                ],   [
-                    "name" => "Huawei",
-                    "creator" => "Ren Zhengfei",
-                    "year" => "2009"
-                ]
-            ];
-            var_dump($movils);
+    function filterByDirector($films, $director) {
+        $filteredDirectors = [];
+        foreach ($films as $film) {
+            if ($film["director"] === $director) {
+                $filteredDirectors[] = $film;
+            }
+        }
+        return $filteredDirectors;
+    }
+    //buscar les pelis a partir del 2000
+    function filterByYear($films) {
+        $filteredDirectors = [];
+        foreach ($films as $film) {
+            if ($film["year"] >= 2000) {
+                $filteredDirectors[] = $film;
+            }
+        }
+        return $filteredDirectors;
+    }
 
-            function filterByCreator($movils, $creator)
-            {
-                $filteredCreators = [];
-                foreach ($movils as $movil) {
-                    if ($movil["creator"] == $creator) {
-                        $filteredCreators[] = $movil;
-                    }
-                }
-                return $filteredCreators;
-                }
+    $filteredFilms = array_filter($films, function ($film) {
+        return $film["year"] >= 2010 && $film["year"] <= 2020;
+    });
 
-            function filterByYear($movils, $year)
-            {
-                $filteredYears = [];
-                foreach ($movils as $movil) {
-                    if ($movil["year"] == $year) {
-                        $filteredYears[] = $movil;
-                    }
-                }
-                return $filteredYears;
-                }
+    ?>
 
-
-            $filteredMovils = array_filter($movils, function ($movil) {
-                return $film["year"] >= 2000 && $film["year"] >= 2008;
-            });
-            ?>
-
-        </h1>
-        <p>Llista de movils:</p>
-        <ul>
-            <?php foreach ($movils as $movil) : ?>
-                <li><?= $movil['name'] ?> (<?= $movil['year'] ?> ) - By <?= $movil['creator'] ?></li>
-            <?php endforeach; ?>
-        </ul>
-        <p>Listat de movils de Steve Jobs</p>
-        <ul>
-            <?php foreach (filterByCreator($movils, "Steve Jobs") as $movil) : ?>
-                <li><?= $movil['name'] ?> (<?= $movil['year'] ?>) - By <?= $movil['creator'] ?></li>
-            <?php endforeach; ?>
-        </ul>
-        <p>Listat de movils de 2008</p>
-        <ul>
-            <?php foreach (filterByYear($movils, "2008") as $movil) : ?>
-                <li><?= $movil['name'] ?> (<?= $movil['year'] ?>) - By <?= $movil['creator'] ?></li>
-            <?php endforeach; ?>
-        </ul>
-        <p>Listat de movils de entre 2002 i 2010 en lambda</p>
-        <ul>
-            <?php foreach ($filteredMovils as $movil) : ?>
-                <li><?= $movil['name'] ?> (<?= $movil['year'] ?>) - By <?= $movil['creator'] ?></li>
-            <?php endforeach; ?>
-        </ul>
-    <p> Agafem el movil 3: <?= $movils[2] ?></p>
-    </body>
+</h1>
+<p>Llista de pelis:</p>
+<ul>
+    <?php foreach ($films as $film) : ?>
+        <li><?= $film['name'] ?> (<?= $film['year'] ?>) - By <?= $film['director'] ?></li>
+    <?php endforeach; ?>
+</ul>
+<p>Llista de pelis de Denis Villeneuve en filtro:</p>
+<ul>
+    <?php foreach ($films as $film) : ?>
+        <?php if ($film["director"] === "Denis Villeneuve") : ?>
+            <li><?= $film['name'] ?> (<?= $film['year'] ?>) - By <?= $film['director'] ?></li>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</ul>
+<p>Llista de pelis de Denis Villeneuve en funcions:</p>
+<ul>
+    <?php foreach (filterByDirector($films, "Denis Villeneuve") as $film) : ?>
+        <li><?= $film['name'] ?> (<?= $film['year'] ?>) - By <?= $film['director'] ?></li>
+    <?php endforeach; ?>
+</ul>
+<p>Llista de pelis a partir del 2000:</p>
+<ul>
+    <?php foreach (filterByYear($films) as $film) : ?>
+        <li><?= $film['name'] ?> (<?= $film['year'] ?>) - By <?= $film['director'] ?></li>
+    <?php endforeach; ?>
+</ul>
+<p>Llista de pelis entre 2010 i 2020 en lambda:</p>
+<ul>
+    <?php foreach ($filteredFilms as $film) : ?>
+        <li><?= $film['name'] ?> (<?= $film['year'] ?>) - By <?= $film['director'] ?></li>
+    <?php endforeach; ?>
+</ul>
+<p> Agafem la peli 3: <?= $films[2]['name'] ?></p>
+</body>
 </html>
