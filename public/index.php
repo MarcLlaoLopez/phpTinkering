@@ -1,17 +1,17 @@
 <?php
-//require "app/index.php";
-//require "resources/views/index.old.blade.php";
+//require "App/index_old.php";
+//require "resources/views/index_old.blade.php";
 
-use Code\App;
+use Core\App;
 
-// phpinfo();
+// mirar info del php del sistema en phpinfo();
 
-//carreguem el fitxer autoload que carrega les dependencies definides al composer.
-// i les classes que trobem als espais de noms del projecte
-require '../vendor/autoload.php'; //incloem fitxer autoload
+//carreguem el fitxer autoload que carrega les dependencies definides al composer.json
+//i les classes que es troben als espais de noms del projecte
+require '../vendor/autoload.php';  //incloem fitxer autoload
 
 //carreguem bootsrap que realitza la configuració inicial del framework
-require '../Code/bootstrap.php';
+require '../Core/bootstrap.php';
 
-//gestionem les rutes del projecte i l'enrutador busca la ruta a config i rederigeixla solicitud al controlador
+//gestionem les rutes del projecte i l'enrutador busca la ruta a config i rederigeix la solicitud al controlador
 App::get('router')->redirect($_SERVER['REQUEST_URI']);

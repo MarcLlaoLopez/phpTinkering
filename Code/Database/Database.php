@@ -1,27 +1,24 @@
 <?php
 
-namespace Code\Database;
+namespace Core\Database;
 
 use PDO;
 
 class Database
 {
-    protected $pdo; //guardem instancia de la classe pdo
+    protected $connection; //guardem instancia de la classe pdo
 
     //creem constructor reb una instancia pdo per a realitzar les consultes
-    public function __construct($pdo)
+    public function __construct(PDO $connection)
     {
-        $this->pdo = $pdo;
+        $this->connection = $connection;
     }
 
-    //creem funcio per agafar els registres d'una taula de la base de dades
-    
-    public function selecAll($table)
+    //funcio per a la connexió
+    public function getConnection()
     {
-        $statment = $this->pdo->prepare("SELECT * FROM $table");
-
-        $statment -> execute();
-
-        return $statment->fetchAll(PDO::FETCH_CLASS);
+        return $this->connection;
     }
+
+
 }
